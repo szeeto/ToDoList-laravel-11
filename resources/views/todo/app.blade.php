@@ -1,6 +1,13 @@
 @extends('layout.app')
 
 
+@section('title','To Do List')
+
+@section('nav')
+@include('layout.nav')
+@endsection
+
+
 @section('content')
             <!-- 01. Content-->
         <h1 class="text-center mb-4">To Do List</h1>
@@ -8,20 +15,7 @@
             <div class="col-md-8">
              <div class="card mb-3">
                 <div class="card-body">
-                    @if (session('success'))
-                        <div class="alert alert-success">
-                            {{ session( 'success') }}
-                        </div>
-                    @endif
-                     @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                    @include('layout.notif')
                     <!-- 02. Form input data -->
                     <form id="todo-form" action="{{ route('todo.post') }}" method="post">
                         @csrf
