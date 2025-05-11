@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\User;
 
+use Carbon\Carbon;
+use App\Models\User;
+use App\Models\UserVerify;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\UserVerify;
 use Illuminate\Support\Facades\Mail;
 
 class ForgotPasswordController extends Controller
@@ -32,13 +34,13 @@ class ForgotPasswordController extends Controller
             'email'=>$request->input('email'),
             'token'=>$token
         ];
-        UserVerify::create($data);
+        UserVerify::create($data);  
 
             // Kirim email verifikasi
-        Mail::send('user.reset-password', ['token' => $token], function ($message) use ($request) {
-        $message->to($request->input('email'));
-        $message->subject('Reset Password');
-    });
+        Mail::send('user.email-reset-password', ['token' => $token], function ($message) use ($request) {
+            $message->to($request->input('email'));
+            $message->subject('Reset Password'); // Subjek email diatur menjadi "Reset Password"
+        });
 
         return redirect()->route('forgot-password')->with('success', 'Silahkan cek email anda untuk melakukan reset password')->withInput();
 
@@ -62,8 +64,19 @@ class ForgotPasswordController extends Controller
         'password-confirmation.required_with' => 'Konfirmasi password wajib diisi',
         'password-confirmation.same' => 'Konfirmasi password tidak sesuai',
     ]);
+        $datauser = UserVerify::where('token', $request->input('token'))->first();
+        if(!$datauser) {
+            return redirect()->back()->withInput()->withErrors('Token tidak valid');
+        }
 
-    $datauser = UserVerify::where('token')
-
-     }
+        $email = $datauser->email;
+        $data = [
+            'password' => bcrypt($request->input('password')),
+            'email_verified_at' => Carbon::now(),
+        ];
+        User::where('email', $email)->update($data);
+        
+        UserVerify::where('email', $email)->delete();
+        return redirect()->route('login')->with('success', 'Password berhasil diubah, silahkan login menggunakan password baru anda');
+    }
 }

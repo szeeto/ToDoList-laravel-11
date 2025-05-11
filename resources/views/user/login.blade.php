@@ -19,7 +19,8 @@
                 </div>
                 <div class="d-inline">
                     <button type="submit" class="btn btn-primary">Login Aplikasi</button>
-                    <a href="{{ route('register') }}">Belum Punya Akun? Silakan Register</a>
+                    <a href="{{ route('forgot-password') }}">Lupa Password</a> 
+                    <a href="{{ route('register') }}">Belum Punya Akun? Silakan Register</a> 
                 </div>
             </form>
         </div>

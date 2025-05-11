@@ -14,6 +14,8 @@
                     <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" required value="{{ old('email') }}">
                 </div>
                     <button type="submit" class="btn btn-primary">Reset Password</button>
+                    <a href="{{ route('login') }}">Login</a>                   
+                     <a href="{{ route('register') }}">Register</a> 
                 </div>
             </form>
         </div>

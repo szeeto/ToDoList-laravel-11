@@ -28,8 +28,9 @@
                     <input type="password" class="form-control" name="password-confirmation" id="password-confirmation" >
                 </div>
                 <div class="d-inline">
-                    <a href="{{ route('login') }}">login</a>
                     <button type="submit" class="btn btn-primary">Register</button>
+                    <a href="{{ route('login') }}">login</a>                   
+                     <a href="{{ route('forgot-password') }}">Lupa Password</a> 
                 </div>
             </form>
         </div>

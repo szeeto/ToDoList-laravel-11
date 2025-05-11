@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('title','Resset Password')
+@section('title','Reset Password')
 
 @section('nav')
 
